@@ -5,7 +5,14 @@ on:
       myTextInput:
         description: 'Text input to be written to JSON file'
         required: true
-        default: 'default value'
+        default: ''
+      choice:
+        type: choice
+        description: Please select the environment where u want to create the connector
+        options:
+        - dev
+        - qa
+        - prod
 jobs:
   form-user-payload:
     runs-on: ubuntu-latest

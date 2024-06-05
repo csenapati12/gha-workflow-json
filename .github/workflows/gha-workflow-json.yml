@@ -1,5 +1,4 @@
-name: Write Input to JSON
-
+name: Connector creations
 on:
   workflow_dispatch:
     inputs:
@@ -7,19 +6,15 @@ on:
         description: 'Text input to be written to JSON file'
         required: true
         default: 'default value'
-
 jobs:
-  write-to-json:
+  form-user-payload:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Write input to JSON file
         run: |
-          echo "{\"${ github.event.inputs.myTextInput }\" }" > input.json
-
+          echo "{ \"input\": \"${{ github.event.inputs.myTextInput }}\" }" > input.json
       - name: Show JSON content
         run: |
           cat input.json

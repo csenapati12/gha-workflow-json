@@ -23,6 +23,12 @@ jobs:
         run: |
           #echo "{ \"input\": \"${{ github.event.inputs.myTextInput }}\" }" > input.json
           echo "${{ github.event.inputs.myTextInput }}" > input.json
-      - name: Show JSON content
+      - name: Set JSON content as output
+        id: json_output
         run: |
-          cat input.json
+          content=$(cat input.json)
+          echo "::set-output name=json_content::$content"
+
+      - name: Use JSON content
+        run: |
+          echo "JSON content: ${{ steps.json_output.outputs.json_content }}"

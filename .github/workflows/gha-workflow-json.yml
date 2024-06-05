@@ -22,7 +22,7 @@ jobs:
       - name: Write input to JSON file
         run: |
           #echo "{ \"input\": \"${{ github.event.inputs.myTextInput }}\" }" > input.json
-          echo "{ ${{ github.event.inputs.myTextInput }}" > input.json
+          echo "${{ github.event.inputs.myTextInput }}" > input.json
       - name: Show JSON content
         run: |
           cat input.json

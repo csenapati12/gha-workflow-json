@@ -18,7 +18,7 @@ jobs:
 
       - name: Write input to JSON file
         run: |
-          echo "{ \"${{ github.event.inputs.myTextInput }}\" > input.json
+          echo "{\"${ github.event.inputs.myTextInput }\" }" > input.json
 
       - name: Show JSON content
         run: |

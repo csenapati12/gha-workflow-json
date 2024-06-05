@@ -1,3 +1,12 @@
+name: Write Input to JSON
+on:
+  workflow_dispatch:
+    inputs:
+      myTextInput:
+        description: 'Text input to be written to JSON file'
+        required: true
+        default: 'default value'
+
 jobs:
   write-to-json:
     runs-on: ubuntu-latest
@@ -10,12 +19,9 @@ jobs:
         run: |
           echo "{ \"input\": \"${{ github.event.inputs.myTextInput }}\" }" > input.json
 
-      - name: Set JSON content as output
-        id: json_output
+      - name: Show JSON content
         run: |
-          content=$(cat input.json)
-          echo "::set-output name=json_content::$content"
-
-      - name: Use JSON content
+          cat input.json
+	  - name: Use JSON content
         run: |
           echo "JSON content: ${{ steps.json_output.outputs.json_content }}"

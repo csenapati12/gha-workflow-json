@@ -4,9 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       jsonInput:
-        description: 'JSON input to process'
+        description: 'JSON User input to process'
         required: true
         default: '{"key1":"value1","key2":"value2"}'
+      choice:
+        type: choice
+        description: Please select the environment where u want to create the connector
+        options:
+        - dev
+        - qa
+        - prod
 
 jobs:
   process-json:

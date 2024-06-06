@@ -21,12 +21,10 @@ jobs:
     - name: Save JSON input to file
       run: echo "${{ github.event.inputs.jsonInput }}" > input.json
       
-    - name: Install jq
-      run: sudo apt-get install jq
-      
+   
     - name: Process JSON input
       run: |
-        cat input.json | jq > output.json
+        cat input.json | jq '.' > output.json
 
     - name: Display processed JSON
       run: cat output.json

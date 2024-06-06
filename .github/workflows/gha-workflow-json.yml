@@ -1,34 +1,35 @@
-name: Connector creations
+name: Process JSON Input
+
 on:
   workflow_dispatch:
     inputs:
-      myTextInput:
-        description: 'Text input to be written to JSON file'
+      jsonInput:
+        description: 'JSON input to process'
         required: true
-        default: ''
-      choice:
-        type: choice
-        description: Please select the environment where u want to create the connector
-        options:
-        - dev
-        - qa
-        - prod
+        default: '{"key1":"value1","key2":"value2"}'
+
 jobs:
-  form-user-payload:
+  process-json:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Write input to JSON file
-        run: |
-          echo "{ \"input\": \"${{ github.event.inputs.myTextInput }}\" }" > input.json
-         # echo "${{ github.event.inputs.myTextInput }}" > input.json
-      - name: Set JSON content as output
-        id: json_output
-        run: |
-          content=$(cat input.json)
-          echo "::set-output name=json_content::$content"
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Use JSON content
-        run: |
-          echo "JSON content: ${{ steps.json_output.outputs.json_content }}"
+    - name: Display JSON input
+      run: echo "${{ github.event.inputs.jsonInput }}"
+
+    - name: Save JSON input to file
+      run: echo "${{ github.event.inputs.jsonInput }}" > input.json
+
+    - name: Process JSON input
+      run: |
+        cat input.json | jq '.' > output.json
+
+    - name: Display processed JSON
+      run: cat output.json
+
+    - name: Upload output.json as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-json
+        path: output.json

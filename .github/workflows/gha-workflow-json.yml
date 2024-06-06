@@ -21,9 +21,9 @@ jobs:
     - name: Save JSON input to file
       run: echo "${{ github.event.inputs.jsonInput }}" > input.json
       
-   
     - name: Process JSON input
-      run: jq '.[]' input.json > output.json
+      run: |
+        cat input.json | jq '.' > output.json
 
     - name: Display processed JSON
       run: cat output.json

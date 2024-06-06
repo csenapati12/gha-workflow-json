@@ -23,8 +23,7 @@ jobs:
       
    
     - name: Process JSON input
-      run: |
-        jq '.' input.json > output.json
+      run: jq '.[]' input.json > output.json
 
     - name: Display processed JSON
       run: cat output.json

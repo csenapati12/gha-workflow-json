@@ -26,7 +26,7 @@ jobs:
       
     - name: Process JSON input
       run: |
-        cat input.json | jq "." > output.json
+        cat input.json | jq > output.json
 
     - name: Display processed JSON
       run: cat output.json

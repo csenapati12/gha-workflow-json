@@ -6,14 +6,18 @@ on:
       jsonInput:
         description: 'JSON User input to process'
         required: true
-        default: ''
+        default: '{"key1":"value1","key2":"value2"}'
       choice:
+        required: true
         type: choice
         description: Please select the environment where u want to create the connector
         options:
         - dev
         - qa
         - prod
+      story_number:
+         type: string
+         required: true
 
 jobs:
   process-json:

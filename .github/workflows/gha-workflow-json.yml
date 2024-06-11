@@ -1,35 +1,44 @@
-name: Handle JSON Input
+name: Process JSON Input
 
 on:
   workflow_dispatch:
     inputs:
       jsonInput:
-        description: 'JSON input'
+        description: 'JSON User input to process'
         required: true
-        default: '{"key1": "value1", "key2": "value2"}'
+        default: ''
+      choice:
+        type: choice
+        description: Please select the environment where u want to create the connector
+        options:
+        - dev
+        - qa
+        - prod
 
 jobs:
   process-json:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Print JSON Input
-        run: echo "JSON Input: ${{ github.event.inputs.jsonInput }}"
+    - name: Display JSON input
+      run: echo "${{ github.event.inputs.jsonInput }}"
+
+    - name: Save JSON input to file
+      run: echo "${{ github.event.inputs.jsonInput }}" > input.json
+    - name: show json
+      run: cat input.json
       
-      - name: Parse JSON Input with jq
-        id: parse_json
-        run: |
-          echo '${{ github.event.inputs.jsonInput }}' | jq . >output.json
-      - name: Display processed JSON
-        run: cat output.json
-      - name: Parse JSON Input with jq
-        id: parse_json
-        run: |
-          echo '${{ github.event.inputs.jsonInput }}' | jq .
-      
-      - name: Access JSON Value
-        run: |
-          VALUE=$(echo '${{ github.event.inputs.jsonInput }}' | jq -r '.key1')
-          echo "Value for key1: $VALUE"
+    - name: Process JSON input
+      run: |
+        cat input.json | jq '.' > output.json
+
+    - name: Display processed JSON
+      run: cat output.json
+
+    - name: Upload output.json as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-json
+        path: output.json

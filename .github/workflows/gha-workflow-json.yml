@@ -5,8 +5,7 @@ on:
     inputs:
       jsonInput:
         description: 'JSON User input to process'
-        required: true
-        default: '{"key1":"value1","key2":"value2"}'
+        required: true        
       choice:
         required: true
         type: choice
@@ -32,17 +31,5 @@ jobs:
     - name: Save JSON input to file
       run: echo "${{ github.event.inputs.jsonInput }}" > input.json
     - name: show json
-      run: cat input.json
-      
-    - name: Process JSON input
-      run: |
-        cat input.json | jq '.' > output.json
-
-    - name: Display processed JSON
-      run: cat output.json
-
-    - name: Upload output.json as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: output-json
-        path: output.json
+      run: cat input.json    
+    
